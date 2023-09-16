@@ -1,14 +1,14 @@
 .data 
 
 	vetor: .word 2, -5, 12, 7, -3, 99, 8, 54, 21, -45, 67, 61, 55
-	tamanho: .word 13
-	colchete: .asciiz  "]"
+	tamanho: .word 13 
+	colchete: .asciiz  "]\n"
 	virgula: .asciiz ", "
 	saidaA: .asciiz "O vetor original é: ["
 	saidaB: .asciiz "O maior elemento do vetor é: "
-	saidaC: .asciiz "O menor elemento do vetor é: "
-	saidaD: .asciiz "A média dos elementos do vetor é: "
-	saidaE: .asciiz "Digite um número: "
+	saidaC: .asciiz "\nO menor elemento do vetor é: "
+	saidaD: .asciiz "\nA média dos elementos do vetor é: "
+	saidaE: .asciiz "\nDigite um número: "
 	encontrado: .asciiz "Número encontrado no vetor"
 	naoEncontrado: .asciiz "Número não encontrado no vetor"
 	
@@ -136,8 +136,27 @@
 	move $t9, $ra
 	jal carrega # carrega o vetor ($s0) e tamanho ($t0)
 	
-	# while( $t0 < tamanho )
+	lw $t3, 0($s0)
+	
+	# while( $t1 < tamanho )
 	while_01:
+	addi $s0, $s0, 4
+	lw $t2, 0($s0)
+	bge $t3, $t2, final_while01
+	
+	move $t3, $t2
+	
+	final_while01:
+	addi $t1, $t1, 1
+	blt $t1, $t0, while_01
+	
+	li $v0, 4
+	la $a0, saidaB
+	Syscall
+	
+	li $v0, 1
+	move $a0, $t3
+	Syscall
 	
 	jr $t9
 	
@@ -168,14 +187,15 @@
 	carrega: # carrega as variaveis para evitar que estejam manipuladas ao começo de cada função
 	
 	la $s0, vetor
-	la $t0, tamanho
+	lw $t0, tamanho
+	li $t1, 0
 	
-	jr $t9
+	jr $ra
 	
 	main:
 	
 	jal imprime_original
-	#jal imprime_maior
+	jal imprime_maior
 	#jal imprime_menor
 	#jal imprime_media
 	#jal verifica_elemento
