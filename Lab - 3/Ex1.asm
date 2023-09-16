@@ -19,114 +19,114 @@
 	
 	li $v0, 4
 	la $a0, saidaA
-	Syscall
+	syscall
 	
 	move $t9, $ra
 	jal carrega # carrega o vetor ($s0) e tamanho ($t0)
 	
 	li $v0, 1
 	lw $a0, 0($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 4($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 8($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 12($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 16($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 20($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 24($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 28($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 32($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 36($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 40($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 44($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, virgula
-	Syscall
+	syscall
 	
 	li $v0, 1
 	lw $a0, 48($s0)
-	Syscall
+	syscall
 	
 	li $v0, 4
 	la $a0, colchete
-	Syscall
+	syscall
 	
 	jr $t9
 	
@@ -152,11 +152,11 @@
 	
 	li $v0, 4
 	la $a0, saidaB
-	Syscall
+	syscall
 	
 	li $v0, 1
 	move $a0, $t3
-	Syscall
+	syscall
 	
 	jr $t9
 	
@@ -166,12 +166,54 @@
 	move $t9, $ra
 	jal carrega # carrega o vetor ($s0) e tamanho ($t0)
 	
+	lw $t3, 0($s0)
+	
+	# while( $t1 < tamanho )
+	while_02:
+	addi $s0, $s0, 4
+	lw $t2, 0($s0)
+	ble $t3, $t2, final_while02
+	
+	move $t3, $t2
+	
+	final_while02:
+	addi $t1, $t1, 1
+	blt $t1, $t0, while_02
+	
+	li $v0, 4
+	la $a0, saidaC
+	syscall
+	
+	li $v0, 1
+	move $a0, $t3
+	syscall
+	
 	jr $t9
 	
 	imprime_media: # Calcular e imprimir a média dos elementos do vetor
 	
 	move $t9, $ra
 	jal carrega # carrega o vetor ($s0) e tamanho ($t0)
+	
+	lw $t3, 0($s0)
+	
+	# while( $t1 < tamanho )
+	while_03:
+	addi $s0, $s0, 4
+	lw $t2, 0($s0)
+	add $t3, $t3, $t2
+	
+	#final do while
+	addi $t1, $t1, 1
+	blt $t1, $t0, while_03
+	
+	li $v0, 4
+	la $a0, saidaD
+	syscall
+	
+	li $v0, 1
+	move $a0, $t3
+	syscall
 	
 	jr $t9
 	
@@ -196,7 +238,7 @@
 	
 	jal imprime_original
 	jal imprime_maior
-	#jal imprime_menor
+	jal imprime_menor
 	#jal imprime_media
 	#jal verifica_elemento
 	
