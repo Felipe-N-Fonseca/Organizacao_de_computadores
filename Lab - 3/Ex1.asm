@@ -230,7 +230,7 @@
 	
 	la $s0, vetor
 	lw $t0, tamanho
-	li $t1, 0
+	li $t1, 1
 	
 	jr $ra
 	
@@ -239,7 +239,7 @@
 	jal imprime_original
 	jal imprime_maior
 	jal imprime_menor
-	#jal imprime_media
+	jal imprime_media
 	#jal verifica_elemento
 	
 	li $v0, 10
