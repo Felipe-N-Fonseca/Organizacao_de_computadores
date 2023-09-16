@@ -221,7 +221,38 @@
 	
 	move $t9, $ra
 	jal carrega # carrega o vetor ($s0) e tamanho ($t0)
+	addi $t0, $t0, 1
 	
+	lw $t3, 0($s0)
+	
+	li $v0, 4
+	la $a0, saidaE
+	syscall
+	
+	li $v0, 5
+	syscall
+	
+	# while( $t1 < tamanho )
+	while_04:
+	beq $v0, $t3, Achou
+	addi $s0, $s0, 4
+	lw $t3, 0($s0)
+	
+	#final do while
+	addi $t1, $t1, 1
+	blt $t1, $t0, while_04
+	
+	li $v0, 4
+	la $a0, naoEncontrado
+	syscall
+	
+	jr $t9
+	
+	Achou:
+	
+	li $v0, 4
+	la $a0, encontrado
+	syscall
 	
 	jr $t9
 	
@@ -240,7 +271,7 @@
 	jal imprime_maior
 	jal imprime_menor
 	jal imprime_media
-	#jal verifica_elemento
+	jal verifica_elemento
 	
 	li $v0, 10
 	syscall 
