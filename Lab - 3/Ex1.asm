@@ -212,7 +212,7 @@
 	syscall
 	
 	li $v0, 1
-	move $a0, $t3
+	div $a0, $t3, $t0
 	syscall
 	
 	jr $t9
